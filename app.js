@@ -6,8 +6,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const contador = document.getElementById('contador-productos');
     const tituloSeccion = document.getElementById('titulo-seccion');
     const botonesFiltro = document.querySelectorAll('.btn-filtro');
+    
+    // Elementos del menú desplegable móvil
+    const sidebarMenu = document.getElementById('sidebar-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const btnAbrirMenu = document.getElementById('btn-abrir-menu');
+    const btnCerrarMenu = document.getElementById('btn-cerrar-menu');
 
-    // Función constructora de las tarjetas de productos
+    // --- LÓGICA DEL MENÚ DESPLEGABLE MÓVIL ---
+    function abrirMenu() {
+        sidebarMenu.classList.remove('-translate-x-full');
+        menuOverlay.classList.remove('hidden');
+        setTimeout(() => menuOverlay.classList.add('opacity-100'), 10);
+    }
+
+    function cerrarMenu() {
+        sidebarMenu.classList.add('-translate-x-full');
+        menuOverlay.classList.remove('opacity-100');
+        setTimeout(() => menuOverlay.classList.add('hidden'), 300);
+    }
+
+    btnAbrirMenu.addEventListener('click', abrirMenu);
+    btnCerrarMenu.addEventListener('click', cerrarMenu);
+    menuOverlay.addEventListener('click', cerrarMenu);
+
+
+    // --- LÓGICA DE FILTRADO Y RENDER ---
     function renderizarProductos(categoriaFiltrada) {
         grilla.innerHTML = '';
         
@@ -48,21 +72,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Manejador de clics en la barra lateral de categorías
+    // Manejador de clics en las categorías
     botonesFiltro.forEach(boton => {
         boton.addEventListener('click', (e) => {
+            // Remover activo de todos y ponerlo en el seleccionado
             botonesFiltro.forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-
-            const categoria = e.target.getAttribute('data-cat');
             
-            // Actualizar el título de la sección de forma elegante
-            tituloSeccion.textContent = e.target.textContent.replace('✨ ', '').replace('🧥 ', '').replace('🌿 ', '').replace('🧴 ', '').replace('🚗 ', '');
+            // Asegurar que agarramos el botón correcto si hacen clic en el emoji interno
+            const botonCorrecto = e.target.closest('.btn-filtro');
+            botonCorrecto.classList.add('active');
+
+            const categoria = botonCorrecto.getAttribute('data-cat');
+            
+            // Limpiar emojis del título
+            tituloSeccion.textContent = botonCorrecto.textContent.replace(/[✨🧥🌿🧴🚗]\s/g, '');
             
             renderizarProductos(categoria);
+
+            // En celulares, cerrar el menú lateral automáticamente al elegir una sección
+            if (window.innerWidth < 768) {
+                cerrarMenu();
+            }
         });
     });
 
-    // Carga inicial de todos los aromas disponibles
+    // Carga inicial
     renderizarProductos('todos');
 });
