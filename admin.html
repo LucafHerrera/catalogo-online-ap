@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | AP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        .brand-subtitle { font-family: 'Playfair Display', Georgia, serif; font-style: italic; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+    <header class="bg-black text-white px-6 py-4 flex justify-between items-center shadow-md">
+        <div class="flex items-center space-x-3">
+            <span class="text-xl font-bold tracking-tight">Panel Control AP</span>
+            <span class="brand-subtitle text-sm border-l border-white/30 pl-3 text-gray-300">gestión de catálogo</span>
+        </div>
+        <a href="index.html" class="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded transition font-medium">📦 Ver Catálogo Público</a>
+    </header>
+
+    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <div class="space-y-6 sticky top-24 h-fit">
+            
+            <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h2 class="text-base font-bold text-gray-900 mb-4 pb-2 border-b" id="form-titulo">✨ Cargar Nuevo Producto</h2>
+                
+                <form id="form-producto" class="space-y-4">
+                    <input type="hidden" id="prod-id">
+                    <input type="hidden" id="prod-imagen-url">
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">Nombre del Producto</label>
+                        <input type="text" id="prod-nombre" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-black" placeholder="Ej: Sedum con Sándalo">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">Categoría</label>
+                            <select id="prod-categoria" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-black">
+                                <option value="textiles">🧥 Textiles</option>
+                                <option value="difusores">🌿 Difusores</option>
+                                <option value="cosmetica">🧴 Cosmética</option>
+                                <option value="auto">🚗 Auto</option>
+                                <option value="ofertas">🔥 Ofertas</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">Subcategoría</label>
+                            <input type="text" id="prod-subcategoria" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-black" placeholder="Ej: Rústicos">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">Contenido</label>
+                            <input type="text" id="prod-tamano" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-black" placeholder="Ej: 250ml">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">Precio ($)</label>
+                            <input type="number" id="prod-precio" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-black" placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">Imagen del Producto</label>
+                        <div class="mt-1 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 hover:bg-gray-100/50 transition relative">
+                            <input type="file" id="prod-file" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <div class="text-center space-y-1">
+                                <p class="text-xs font-medium text-gray-600" id="file-status-text">Seleccionar foto de la PC</p>
+                            </div>
+                        </div>
+                        <div id="preview-container" class="hidden mt-2 flex items-center space-x-2 bg-gray-100 p-2 rounded-lg border">
+                            <img id="img-preview" src="" class="w-12 h-12 object-cover rounded">
+                            <span class="text-xs text-gray-500 truncate max-w-[200px]" id="img-preview-name"></span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">Descripción corta</label>
+                        <textarea id="prod-descripcion" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-black" placeholder="Notas aromáticas y blend..."></textarea>
+                    </div>
+
+                    <div class="flex flex-col gap-1.5 pt-1 bg-gray-50 p-3 rounded-lg border border-gray-100 text-xs">
+                        <label class="flex items-center space-x-3 text-gray-700 cursor-pointer">
+                            <input type="checkbox" id="prod-mostrar-precio" class="w-4 h-4 text-black border-gray-300 rounded focus:ring-black">
+                            <span>Mostrar precio en catálogo público</span>
+                        </label>
+                        <label class="flex items-center space-x-3 text-gray-700 cursor-pointer">
+                            <input type="checkbox" id="prod-activo" checked class="w-4 h-4 text-black border-gray-300 rounded focus:ring-black">
+                            <span>Producto Activo (Visible)</span>
+                        </label>
+                    </div>
+
+                    <div class="flex gap-2 pt-1">
+                        <button type="submit" id="btn-submit" class="flex-1 bg-black hover:bg-gray-900 text-white font-bold py-2.5 rounded-lg text-sm transition shadow-sm">Guardar Producto</button>
+                        <button type="button" id="btn-cancelar" class="hidden bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium px-4 py-2.5 rounded-lg text-sm transition">Cancelar</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h2 class="text-base font-bold text-gray-900 mb-3 pb-2 border-b">📊 Subida Masiva (Excel/CSV)</h2>
+                <p class="text-xs text-gray-500 mb-4 leading-relaxed">Subí tu lista completa guardada como archivo CSV. Los encabezados del archivo deben ser: <code class="bg-gray-100 px-1 py-0.5 rounded font-mono text-[11px] text-black">nombre,categoria,subcategoria,descripcion,tamano,precio,mostrar_precio,activo,imagen</code></p>
+                
+                <div class="flex flex-col gap-3">
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 hover:bg-gray-100/50 transition relative flex flex-col items-center justify-center">
+                        <input type="file" id="csv-file" accept=".csv" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <p class="text-xs font-bold text-gray-700 text-center" id="csv-status-text">📁 Seleccionar Archivo .CSV</p>
+                    </div>
+                    <button type="button" id="btn-importar-csv" disabled class="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-200 disabled:text-gray-400 text-white font-bold py-2 rounded-lg text-sm transition shadow-sm">
+                        🚀 Procesar e Importar Lista
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <section class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <h2 class="text-lg font-bold text-gray-900 mb-4 pb-2 border-b">📋 Inventario y Estado Actual</h2>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 bg-gray-50 text-xs font-bold uppercase tracking-wider text-gray-400">
+                            <th class="py-3 px-4">Producto</th>
+                            <th class="py-3 px-4">Categoría</th>
+                            <th class="py-3 px-4">Precio</th>
+                            <th class="py-3 px-4 text-center">Estado</th>
+                            <th class="py-3 px-4 text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-cuerpo" class="text-sm divide-y divide-gray-100">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script type="module">
+        const BASE_SUPABASE_URL = "https://rrynyzvkwdmgdfpkakde.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyeW55enZrd2RtZ2RmcGtha2RlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NzY2NDQsImV4cCI6MjA5NjI1MjY0NH0.K9hcjEweIendolA2H_cQOXbDETdpyBMf-WkZIbWgNrI";
+        
+        const TABLE_ENDPOINT = `${BASE_SUPABASE_URL}/rest/v1/productos`;
+        const BUCKET_NAME = "imagenes-productos";
+
+        const form = document.getElementById('form-producto');
+        const tablaCuerpo = document.getElementById('tabla-cuerpo');
+        const formTitulo = document.getElementById('form-titulo');
+        const btnCancelar = document.getElementById('btn-cancelar');
+        const btnSubmit = document.getElementById('btn-submit');
+        
+        const inputFile = document.getElementById('prod-file');
+        const fileStatusText = document.getElementById('file-status-text');
+        const previewContainer = document.getElementById('preview-container');
+        const imgPreview = document.getElementById('img-preview');
+        const imgPreviewName = document.getElementById('img-preview-name');
+
+        // Elementos nuevos para el CSV Masivo
+        const inputCsv = document.getElementById('csv-file');
+        const csvStatusText = document.getElementById('csv-status-text');
+        const btnImportarCsv = document.getElementById('btn-importar-csv');
+
+        let modoEdicion = false;
+        let archivoSeleccionado = null;
+        let datosCsvProcesados = [];
+
+        // --- MANEJO DE SELECCIÓN DE IMAGEN LOCAL ---
+        inputFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            archivoSeleccionado = file;
+            fileStatusText.textContent = "📸 Foto cargada";
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                imgPreview.src = event.target.result;
+                imgPreviewName.textContent = file.name;
+                previewContainer.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // --- SUBIR IMAGEN AL STORAGE ---
+        async function subirArchivoAStorage(file) {
+            const extension = file.name.split('.').pop();
+            const nombreArchivoUnico = `${Date.now()}_${Math.random().toString(36).substring(7)}.${extension}`;
+            const uploadUrl = `${BASE_SUPABASE_URL}/storage/v1/object/${BUCKET_NAME}/${nombreArchivoUnico}`;
+            const response = await fetch(uploadUrl, {
+                method: 'POST',
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': file.type },
+                body: file
+            });
+            if (!response.ok) throw new Error('Error en el Storage');
+            return `${BASE_SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${nombreArchivoUnico}`;
+        }
+
+        // --- TRAER E INYECTAR DATOS EN LA TABLA ---
+        async function cargarInventario() {
+            try {
+                tablaCuerpo.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-gray-400">Sincronizando inventario...</td></tr>`;
+                const res = await fetch(`${TABLE_ENDPOINT}?order=id.desc`, {
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+                });
+                const productos = await res.json();
+                
+                tablaCuerpo.innerHTML = '';
+                productos.forEach(p => {
+                    const fila = document.createElement('tr');
+                    fila.className = "hover:bg-gray-50/70 transition";
+                    fila.innerHTML = `
+                        <td class="py-4 px-4 flex items-center space-x-3">
+                            <img src="${p.imagen}" class="w-10 h-10 object-cover rounded-lg border bg-gray-50" onerror="this.src='https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=100&q=80'">
+                            <div>
+                                <div class="font-bold text-gray-900">${p.nombre}</div>
+                                <div class="text-xs text-gray-400">${p.subcategoria} • ${p.tamano}</div>
+                            </div>
+                        </td>
+                        <td class="py-4 px-4">
+                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 border text-gray-600 uppercase tracking-tight">${p.categoria}</span>
+                        </td>
+                        <td class="py-4 px-4 font-medium text-gray-900">
+                            ${p.mostrar_precio ? `$${p.precio}` : '<span class="text-gray-400 text-xs italic">Oculto</span>'}
+                        </td>
+                        <td class="py-4 px-4 text-center">
+                            <button onclick="cambiarEstadoActivo(${p.id}, ${p.activo})" class="px-2.5 py-1 rounded-full text-xs font-bold shadow-sm border transition ${p.activo ? 'bg-green-50 border-green-200 text-green-700' : 'bg-amber-50 border-amber-200 text-amber-700'}">
+                                ${p.activo ? '● Activo' : '○ Pausado'}
+                            </button>
+                        </td>
+                        <td class="py-4 px-4 text-right space-x-1">
+                            <button onclick="prepararEdicion(${JSON.stringify(p).replace(/"/g, '&quot;')})" class="text-xs font-bold text-blue-600 hover:text-blue-800 bg-blue-50 px-2.5 py-1.5 rounded transition">Editar</button>
+                            <button onclick="eliminarProducto(${p.id})" class="text-xs font-bold text-red-600 hover:text-red-800 bg-red-50 px-2.5 py-1.5 rounded transition">Borrar</button>
+                        </td>
+                    `;
+                    tablaCuerpo.appendChild(fila);
+                });
+            } catch (error) {
+                tablaCuerpo.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-red-500 font-medium">Error de conexión.</td></tr>`;
+            }
+        }
+
+        // --- SUBMIT: ACCIÓN DE GUARDAR MANUAL ---
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = "Procesando multimedia...";
+
+            try {
+                let urlDeImagenDefinitiva = document.getElementById('prod-imagen-url').value;
+                if (archivoSeleccionado) {
+                    urlDeImagenDefinitiva = await subirArchivoAStorage(archivoSeleccionado);
+                }
+                if (!urlDeImagenDefinitiva) {
+                    urlDeImagenDefinitiva = 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80';
+                }
+
+                const id = document.getElementById('prod-id').value;
+                const datos = {
+                    nombre: document.getElementById('prod-nombre').value,
+                    categoria: document.getElementById('prod-categoria').value,
+                    subcategoria: document.getElementById('prod-subcategoria').value,
+                    tamano: document.getElementById('prod-tamano').value,
+                    precio: parseFloat(document.getElementById('prod-precio').value) || 0,
+                    imagen: urlDeImagenDefinitiva,
+                    descripcion: document.getElementById('prod-descripcion').value,
+                    mostrar_precio: document.getElementById('prod-mostrar-precio').checked,
+                    activo: document.getElementById('prod-activo').checked
+                };
+
+                const urlEndpoint = modoEdicion ? `${TABLE_ENDPOINT}?id=eq.${id}` : TABLE_ENDPOINT;
+                const metodoHttp = modoEdicion ? 'PATCH' : 'POST';
+
+                const res = await fetch(urlEndpoint, {
+                    method: metodoHttp,
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=representation'
+                    },
+                    body: JSON.stringify(datos)
+                });
+
+                if (!res.ok) throw new Error('Error en el servidor');
+                resetearFormulario();
+                cargarInventario();
+            } catch (error) {
+                alert('Error al guardar: ' + error.message);
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = "Guardar Producto";
+            }
+        });
+
+        // --- SELECCIÓN Y LECTURA DEL EXCEL/CSV MASIVO ---
+        inputCsv.addEventListener('change', (e) => {
+            const archivo = e.target.files[0];
+            if (!archivo) return;
+
+            csvStatusText.textContent = `📊 Archivo: ${archivo.name}`;
+            btnImportarCsv.disabled = false;
+
+            const lector = new FileReader();
+            lector.onload = (evt) => {
+                const contenidoTexto = evt.target.result;
+                datosCsvProcesados = procesarTextoCSV(contenidoTexto);
+            };
+            lector.readAsText(archivo, 'UTF-8');
+        });
+
+        // --- LÓGICA DE CONVERSIÓN DE CSV A JSON (NATAL) ---
+        function procesarTextoCSV(texto) {
+            const lineas = texto.split(/\r?\n/);
+            if (lineas.length < 2) return [];
+
+            // Obtenemos los encabezados de la fila 1 y limpiamos espacios molestos
+            const encabezados = lineas[0].split(',').map(h => h.trim().toLowerCase());
+            const resultado = [];
+
+            for (let i = 1; i < lineas.length; i++) {
+                if (!lineas[i].trim()) continue; // Omitir líneas vacías
+
+                const celdas = lineas[i].split(',');
+                const item = {};
+
+                encabezados.forEach((encabezado, indice) => {
+                    let valor = celdas[indice] ? celdas[indice].trim() : '';
+
+                    // Conversiones de tipo automáticas según la base de datos
+                    if (encabezado === 'precio') {
+                        valor = parseFloat(valor) || 0;
+                    } else if (encabezado === 'mostrar_precio' || encabezado === 'activo') {
+                        valor = valor.toUpperCase() === 'TRUE';
+                    }
+
+                    item[encabezado] = valor;
+                });
+                resultado.push(item);
+            }
+            return resultado;
+        }
+
+        // --- SUBIDA MASIVA POR HTTP (POST MULTIPLE) ---
+        btnImportarCsv.addEventListener('click', async () => {
+            if (datosCsvProcesados.length === 0) {
+                alert('La planilla está vacía o mal formateada.');
+                return;
+            }
+
+            btnImportarCsv.disabled = true;
+            btnImportarCsv.textContent = `🚀 Subiendo ${datosCsvProcesados.length} productos...`;
+
+            try {
+                // Supabase te permite insertar múltiples filas juntas enviando un Array en el cuerpo por POST
+                const respuesta = await fetch(TABLE_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(datosCsvProcesados)
+                });
+
+                if (!respuesta.ok) throw new Error('Error al inyectar la matriz CSV');
+
+                alert(`🎉 ¡Éxito! Se cargaron ${datosCsvProcesados.length} productos de forma masiva.`);
+                inputCsv.value = '';
+                csvStatusText.textContent = "📁 Seleccionar Archivo .CSV";
+                datosCsvProcesados = [];
+                cargarInventario();
+
+            } catch (error) {
+                alert('Error en subida masiva: ' + error.message);
+            } finally {
+                btnImportarCsv.disabled = true;
+                btnImportarCsv.textContent = "🚀 Procesar e Importar Lista";
+            }
+        });
+
+        // --- PAUSAR O ACTIVAR RÁPIDAMENTE ---
+        window.cambiarEstadoActivo = async (id, estadoActual) => {
+            try {
+                await fetch(`${TABLE_ENDPOINT}?id=eq.${id}`, {
+                    method: 'PATCH',
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ activo: !estadoActual })
+                });
+                cargarInventario();
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        // --- BORRAR PRODUCTO ---
+        window.eliminarProducto = async (id) => {
+            if (!confirm('¿Estás seguro de eliminar este producto?')) return;
+            try {
+                await fetch(`${TABLE_ENDPOINT}?id=eq.${id}`, {
+                    method: 'DELETE',
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+                });
+                cargarInventario();
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        // --- PREPARAR FORMULARIO PARA EDITAR ---
+        window.prepararEdicion = (prod) => {
+            modoEdicion = true;
+            formTitulo.textContent = "✏️ Editar Producto";
+            btnCancelar.classList.remove('hidden');
+            document.getElementById('prod-id').value = prod.id;
+            document.getElementById('prod-nombre').value = prod.nombre;
+            document.getElementById('prod-categoria').value = prod.categoria;
+            document.getElementById('prod-subcategoria').value = prod.subcategoria;
+            document.getElementById('prod-tamano').value = prod.tamano;
+            document.getElementById('prod-precio').value = prod.precio;
+            document.getElementById('prod-imagen-url').value = prod.imagen;
+            document.getElementById('prod-descripcion').value = prod.descripcion;
+            document.getElementById('prod-mostrar-precio').checked = prod.mostrar_precio;
+            document.getElementById('prod-activo').checked = prod.activo;
+            imgPreview.src = prod.imagen;
+            imgPreviewName.textContent = "Imagen actual";
+            previewContainer.classList.remove('hidden');
+            fileStatusText.textContent = "Cambiar foto";
+        };
+
+        function resetearFormulario() {
+            modoEdicion = false;
+            archivoSeleccionado = null;
+            formTitulo.textContent = "✨ Cargar Nuevo Producto";
+            btnCancelar.classList.add('hidden');
+            form.reset();
+            document.getElementById('prod-id').value = '';
+            document.getElementById('prod-imagen-url').value = '';
+            previewContainer.classList.add('hidden');
+            fileStatusText.textContent = "Seleccionar foto de la PC";
+        }
+
+        btnCancelar.addEventListener('click', resetearFormulario);
+        cargarInventario();
+    </script>
+</body>
+</html>

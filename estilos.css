@@ -1,25 +1,47 @@
 /* estilos.css */
+
+/* Aplicamos la tipografía fina y estilizada de la etiqueta */
+.brand-subtitle {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    color: #1c1c1c;
+    text-transform: lowercase; /* Todo en minúsculas como tu etiqueta original */
+    letter-spacing: 0.02em;
+}
+
+.brand-ap {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #000000;
+}
+
+.brand-slogan {
+    font-family: system-ui, -apple-system, sans-serif;
+    letter-spacing: 0.15em;
+}
+
+/* Estilos de la botonera lateral minimalista */
 .btn-filtro {
-    background-color: #f9fafb;
-    color: #4b5563;
-    border: 1px solid #f3f4f6;
+    background-color: transparent;
+    color: #6b7280;
+    border: 1px solid transparent;
 }
 
 .btn-filtro:hover {
-    background-color: #f3f4f6;
+    background-color: #f9fafb;
     color: #111827;
 }
 
-/* Estado seleccionado (tanto web como móvil) */
+/* Estado seleccionado refinado (Negro con texto blanco) */
 .btn-filtro.active {
     background-color: #000000 !important;
     color: #ffffff !important;
-    border-color: #000000;
-    font-weight: 600;
+    font-weight: 500;
 }
 
+/* Animación de los productos */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 

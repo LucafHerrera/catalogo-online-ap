@@ -18,24 +18,31 @@ const catalogoProductos = [
         tamano: "250ml",
         imagen: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80"
     },
-    {
-        id: 3,
-        nombre: "Una Vainilla Fatal",
-        categoria: "textiles",
-        subcategoria: "Línea ¡Que Haya Fiesta!",
-        descripcion: "Vainilla almibarada y dulce, con toques especiados de sándalo y cúrcuma.",
-        tamano: "250ml con gatillo",
-        imagen: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&q=80"
-    },
-    {
-        id: 4,
-        nombre: "Naranja + Pimienta",
-        categoria: "difusores",
-        subcategoria: "Línea Amigos",
-        descripcion: "Difusor de aromas gradual y permanente con varillas de ratán.",
-        tamano: "250ml",
-        imagen: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?w=500&q=80"
-    },
+    // Ejemplo de cómo estructurar tus ítems en productos.js para las pruebas:
+{
+    id: 3,
+    nombre: "Una Vainilla Fatal",
+    categoria: "ofertas", // Lo movemos a ofertas para probar
+    subcategoria: "Línea ¡Que Haya Fiesta!",
+    descripcion: "Vainilla almibarada y dulce, con toques especiados.",
+    tamano: "250ml",
+    imagen: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&q=80",
+    precio: 4500,        // Agregamos precio
+    mostrarPrecio: true, // ¡ACTIVADO! Se va a ver en la tarjeta
+    activo: true
+},
+{
+    id: 4,
+    nombre: "Naranja + Pimienta",
+    categoria: "difusores",
+    subcategoria: "Línea Amigos",
+    descripcion: "Difusor de aromas gradual y permanente.",
+    tamano: "250ml",
+    imagen: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?w=500&q=80",
+    precio: 6200,
+    mostrarPrecio: false, // ¡DESACTIVADO! El precio está cargado pero oculto en la web
+    activo: true    
+},
     {
         id: 5,
         nombre: "Cremas Veganas para Manos",
